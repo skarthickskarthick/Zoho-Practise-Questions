@@ -1,0 +1,339 @@
+set 2:
+
+
+1)Remove unbalanced parentheses in a given expression.
+
+    Eg.) Input  : ((abc)((de))
+         Output : ((abc)(de)) 
+ 
+         Input  : (a(b)))(cd)  
+         Output : (a(b))(cd)
+
+	 Input  : (a(b)))(c(d)
+         Output : (a(b))(cd)
+
+         Input  : (ab))(c(d))))
+         Output : (ab)(c(d))
+
+         Input  : (((ab)
+         Output : (ab) 
+
+
+package practise;
+
+import java.util.ArrayList;
+
+public class parenthesis {
+  public static void main(String args[])
+  {
+	  String str="(((((((ab)";
+	ArrayList<Integer> arr=new ArrayList<>();
+	  int end=0,in=0,flag=0;
+	  for(int i=0;i<str.length();i++)
+	  {
+		  if(str.charAt(i)=='(')
+		  {
+			  
+			  if(end<i)
+			  {
+				  for(int j=end+1;j<i;j++)
+				  {
+					  if(str.charAt(j)==')')
+					arr.add(j);
+				  }
+				  end=i;
+			  }
+			  
+			  
+			  
+			  flag=0;
+			  for(end+=1;end<str.length();end++)
+			  {
+				  if(str.charAt(end)==')')//found the appropriate close bracket
+				  {
+					  flag=1;
+					  break;
+				  }
+				  
+			  }
+			  if(flag==0)
+			  {
+				  arr.add(i);
+			  }
+			  
+			  
+			  
+			  if(end==str.length()&&str.charAt(end-1)!=')')
+			  {
+				  for(int j=i;j<str.length();j++)
+				  {
+					  if(str.charAt(j)=='(')
+						  arr.add(j);
+				  }
+				  break;
+			  }
+		  }
+		  
+	  }
+	  //System.out.println(end);
+	  if(end!=str.length())
+	  {
+		  for(int i=end+1;i<str.length();i++)
+		arr.add(i);
+	  }
+	  
+		  System.out.println(arr);
+		  
+	  
+	  String s="";
+	  
+	  char c[]=str.toCharArray();
+			  
+	  for(int i=0;i<c.length;i++)
+	  {
+		  if(!arr.contains(i))
+		  {
+			  s+=Character.toString(c[i]);
+		  }
+	  }
+	  System.out.println(s);
+  
+  
+  }
+}
+
+
+
+2)find the nth number in the subset of 2 numbers 3 and 4 
+
+package practise;
+
+public class numbersubsets {
+     public static void main(String args[])
+     {
+    	 int n=9;
+    	 //find the number of digits
+    	 if(n==1)
+    		 System.out.println("3");
+    	 else {
+    	 int ntemp=n,i=0;
+    	 for( i=0;ntemp/2>0;i++)
+    	 {
+    		 ntemp=ntemp/2;
+    	 }
+    	 
+    	 //System.out.println(i);
+    	 
+    	 //find the postion
+    	 //to find the position find the 2 power n nearest to n
+    	 int pow=0;
+    	 for(int j=0;j<n;j++)
+    	 {
+    		 if(Math.pow(2,j)>n)
+    		 {
+    			 pow=(int)Math.pow(2,j-1);
+    			 break;
+    		 }
+    	 }
+    	// System.out.println(pow);
+    	 
+    	 int pos=n-pow+1;
+    	 
+    	 if(i==0)//for n=1
+    	 {
+    		 pos=1;
+    	 }
+    	 if(pos==pow)
+    	 {
+    		 i=i+1;
+    		 pos=0;
+    	 }
+    	 
+    	 //System.out.println(pos);
+    	 
+    	 //generating the number
+    	 
+    	 for(int j=i-1;j>=0;j--)
+    	 {
+    		 if(((pos>>j)&1)==0) //010 to 343 mapping 0 to 3 and 1 to 4
+    			 {
+    			 System.out.print("3");
+    		 }
+    		 else
+    			 System.out.print("4");    	
+    		 }
+     }
+     }
+}
+
+
+3)check for valid expressions
+
+//checked for valid paranthesis and valid operators positions
+
+package practise;
+
+import java.util.Stack;
+
+public class validexpression {
+  public static void main(String args[])
+  {
+	  String str="(a+b)(n+b((a-b)))";
+	  int flag=0;
+	  Stack<Character> s=new Stack<>();
+	  for(int i=0;i<str.length();i++)
+	  {
+		  if(str.charAt(i)=='(')
+			  s.push(str.charAt(i));
+		  else if(str.charAt(i)==')'&&s.isEmpty()) {
+			  System.out.println("false");
+			  flag=1;
+			  break;
+		  }
+			  
+		  else if(str.charAt(i)==')')
+			  s.pop();
+	  }
+	  if(!s.isEmpty())
+		  System.out.println("false");
+	  else if(s.isEmpty()&&flag==0)
+		  System.out.println("true");
+	  
+	  int flag1=0;
+	  
+	  for(int i=0;i<str.length();i++)
+	  {
+		  if(str.charAt(i)=='+'||str.charAt(i)=='-'||str.charAt(i)=='*'||str.charAt(i)=='/') 
+		  {
+			  if(i>0&&i<str.length()-2)
+			  {
+				  if(!(Character.isAlphabetic(str.charAt(i-1))&&Character.isAlphabetic(str.charAt(i+1))))
+				  {
+					  flag1=1;
+					  System.out.println("false");
+					  break;
+					  
+				  }		  
+			  }
+			  else {
+				  flag1=1;
+				  System.out.println("false");
+				  break;
+			  }
+		  }
+	  }
+	  
+	  if(flag1==0)
+		  System.out.println("true");
+	  
+	 
+  }
+}
+
+(or)
+
+valid paranthesis--> optmised way wth count variable
+
+package practise;
+
+import java.util.Stack;
+
+public class validparanthesis {
+	 public static void main(String args[])
+	  {
+		  String str="((((((a+b)(n+b((a-b)))";
+		  int count=0;
+		  for(int i=0;i<str.length();i++)
+		  {
+			  if(str.charAt(i)=='(')
+				 count++;
+			  else if(str.charAt(i)==')') 
+				  count--;
+				  
+				
+		  }
+		  if(count==0)
+		  System.out.println("true");
+		  else
+			  System.out.println("false");
+		
+		  
+		 
+	  }
+}
+
+4)rearrange the array with max and min
+
+sorted array
+package practise;
+
+public class sortingzigzag {
+public static void main(String args[])
+{
+	int arr[]= {1,2,3,4,5,6,7};//rotation for even index only for sorted array
+   for(int i=0;i<arr.length;i++)
+   {
+	   for(int j=i+1;j<arr.length;j++)
+	   {
+		   if(i%2==0)
+		   {
+			   while(arr[i]<arr[j]) {
+			   int temp=arr[i];
+			   arr[i]=arr[j];
+			   arr[j]=temp;
+			   }
+					  
+		   }
+	   }
+	   
+   }
+   for(int a:arr)
+System.out.print(a);
+
+
+
+
+
+}
+}
+
+     (or)
+
+unsorted array
+
+
+package practise;
+
+public class sortingzigzag {
+public static void main(String args[])
+{
+	int arr[]= {1,4,7,2,5,6,3,8};//rotation for even index only for sorted array
+   for(int i=0;i<arr.length;i++)
+   {
+	   for(int j=i+1;j<arr.length;j++)
+	   {
+		   if(i%2==0)
+		   {
+			   while(arr[i]<arr[j]) {
+			   int temp=arr[i];
+			   arr[i]=arr[j];
+			   arr[j]=temp;
+			   }
+					  
+		   }
+		   else
+		   {
+			   while(arr[i]>arr[j]) {
+				   int temp=arr[i];
+				   arr[i]=arr[j];
+				   arr[j]=temp;
+				   }
+		   }
+			   
+	   }
+	   
+   }
+   for(int a:arr)
+System.out.print(a);
+}
+}
