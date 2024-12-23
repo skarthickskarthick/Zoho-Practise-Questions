@@ -1,0 +1,1004 @@
+1)Reverse array
+
+package programs;
+
+public class reversearrayrecursion {
+    public static void main(String args[])
+    {
+        int arr[]={1,2,3,4};
+        print(f(arr,0,arr.length-1));
+    }
+    public static int[] f(int[] arr,int l,int r)
+    {
+        if(l>r)
+            return arr;
+        int temp=arr[l];
+        arr[l]=arr[r];
+        arr[r]=temp;
+        f(arr,l+1,r-1);
+        return arr;
+    }
+    public static void print(int[] arr)
+    {
+        for(int i:arr)
+            System.out.print(i+" ");
+    }
+}
+
+
+2)check palindrome 
+
+package programs;
+
+public class palindromerecursion {
+    public static void main(String args[])
+    {
+        String s="malayalamaq";
+       System.out.println(f(s,0,s.length()-1));
+
+    }
+    public static boolean f(String s,int l,int r)
+    {
+        if(l>r)
+            return false;
+        if(s.charAt(l)==(s.charAt(r)))
+            return true;
+        f(s,l+1,r-1);
+        return false;
+    }
+}
+
+
+3)91-Decode ways only using recursion
+
+
+package programs;
+
+public class decodeways {
+    public static void main(String args[])
+    {
+
+        System.out.println(rec("122016"));
+    }
+    public static int rec(String up)
+    {
+        if(up.isEmpty())
+
+
+            return 1;
+
+        if(up.startsWith("0"))
+            return 0;
+
+        int count1=  rec(up.substring(1));
+        int count2=0;
+        if(up.length()>=2&&Integer.parseInt(up.substring(0,2))<=26)//for inputs like 27
+          count2=rec(up.substring(2));
+        return count1+count2;
+
+    }
+}
+
+
+
+4) array subsequences
+
+package programs;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class arraysubsequences {
+    public static void main(String args[])
+    {
+        int[] arr={1,2,3};
+      List<List<Integer>> list=f(arr,arr.length,0,new ArrayList<>(),new ArrayList<>());
+      System.out.println(list);
+    }
+    public static List<List<Integer>> f(int[] arr,int n,int in,ArrayList<Integer> templist, List<List<Integer>> list)
+    {
+
+     if(in>=n){
+         list.add(new ArrayList<>(templist));
+         return list;
+
+     }
+     templist.add(arr[in]);
+     f(arr,n,in+1,templist,list);
+     templist.remove(Integer.valueOf(arr[in]));
+     f(arr,n,in+1,templist,list);
+     return list;
+    }
+}
+
+
+5)46.permutations
+
+import java.util.*;
+
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+     return generatePermutations(nums,0);
+    }
+    
+    static List<List<Integer>> generatePermutations(int[] nums,int in) {
+       List<List<Integer>> ans=new ArrayList<>(); 
+       if(in==nums.length)
+       {
+        
+       List<Integer> temp = new ArrayList<>();
+            for (int num : nums) {
+                temp.add(num);
+            }
+            ans.add(temp);
+         return ans;
+       }
+       for(int i=in;i<nums.length;i++)
+       {
+        swap(i,in,nums);
+       ans.addAll( generatePermutations(nums,in+1));
+        swap(i,in,nums);
+       }
+       return ans;
+    }
+    public static void swap(int i,int in,int[] nums)
+    {
+        int temp=nums[i];
+        nums[i]=nums[in];
+        nums[in]=temp;
+    }
+}
+
+6)60. kth permutation
+
+class Solution {
+    public String getPermutation(int n, int k) {
+
+        List<Integer> list=new ArrayList<>();
+        int fact=1;
+        for(int i=1;i<=n;i++)
+        {
+            list.add(i);
+            fact*=i;
+        }
+        String ans="";
+        fact=fact/list.size();
+        k=k-1;
+        while(true)
+        {
+         ans+=list.get(k/fact);
+         list.remove(k/fact);
+         if(list.isEmpty())
+         break;
+         k=k%fact;
+         fact=fact/list.size();
+        }
+        return ans;
+    }
+}
+
+7)31.next permutation(no recursion)
+
+
+import java.util.*;
+
+class Solution {
+    public void nextPermutation(int[] nums) {
+        int n = nums.length;
+        int in=-1;
+        for(int i=n-2;i>=0;i--)
+        {
+            if(nums[i]<nums[i+1])
+            {
+                in=i;
+                break;
+            }
+        }
+
+        if(in==-1)
+        {
+            reverse(nums,0,n-1);
+            return;
+        }
+
+        for(int i=n-1;i>in;i--)
+        {
+            if(nums[i]>nums[in])
+            {
+                swap(nums,i,in);
+                break;
+            }
+        }
+        reverse(nums,in+1,n-1);
+        return;
+    }
+    static void swap(int[] nums,int i,int j)
+    {
+         int temp=nums[i];
+          nums[i]=nums[j];
+          nums[j]=temp;
+    }
+    static void reverse(int[] nums,int i,int j)
+    {
+        while(i<j){
+         swap(nums,i,j);
+          j--;i++;
+        }
+        
+    }
+}
+
+
+8)39.combination sum
+
+public static void f(int in,int target,Stack<Integer> ds,int[] candidates,List<List<Integer>> ans)
+    {
+        if(in==candidates.length)
+        {
+            if(target==0)
+          ans.add(new ArrayList<>(ds));
+          return;
+            
+        }
+        if(candidates[in]<=target)
+        {
+            ds.push(candidates[in]);
+            f(in,target-candidates[in],ds,candidates,ans);
+            ds.pop();
+        }
+        
+         f(in+1,target,ds,candidates,ans);
+         return;
+    }
+
+9)40.combination sum -2
+
+class Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> ans=new ArrayList<>();
+        Arrays.sort(candidates);
+        f(0,target,new Stack<>(),candidates,ans);
+        return ans;
+    }
+    public static void f(int in,int target,Stack<Integer> ds,int[] candidates,List<List<Integer>> ans)
+    {
+        
+            if(target==0)
+            {
+          ans.add(new ArrayList<>(ds));
+          return;
+            
+        }
+       for(int i=in;i<candidates.length;i++)
+        {
+            if(i>in&&candidates[i]==candidates[i-1])continue;
+            if(candidates[in]>target)break;
+            ds.push(candidates[i]);
+            f(i+1,target-candidates[i],ds,candidates,ans);
+            ds.pop();
+        }
+        
+        
+         return;
+    }
+}
+
+10) subset sums gfg
+
+
+class Solution {
+    public ArrayList<Integer> subsetSums(int[] arr) {
+        // code here
+        List<List<Integer>> list=f(arr,arr.length,0,new ArrayList<>(),new ArrayList<>());
+        ArrayList<Integer> ans=new ArrayList<>();
+        for(List<Integer> l:list)----------------
+        {
+            int sum=0;
+            for(Integer i:l)
+            {
+                sum+=i;
+            }
+            ans.add(sum);
+        }
+        return ans;-------------------
+
+    }
+     public static List<List<Integer>> f(int[] arr,int n,int in,ArrayList<Integer> templist, List<List<Integer>> list)
+    {
+
+     if(in>=n){
+         list.add(new ArrayList<>(templist));
+         return list;
+
+     }
+     templist.add(arr[in]);
+     f(arr,n,in+1,templist,list);
+     templist.remove(Integer.valueOf(arr[in]));
+     f(arr,n,in+1,templist,list);
+     return list;
+    }
+
+}
+
+Input: arr[] = [5, 6, 7]
+Output: [0, 5, 6, 7, 11, 12, 13, 18]
+Explanation: The possible subset sums are 0 (no elements), 5, 6, 7, and their combinations.
+
+
+11)90. Subsets II
+
+
+class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> list=f(nums,nums.length,0,new ArrayList<>(),new ArrayList<>());
+          Set<List<Integer>> uniqueSet = new LinkedHashSet<>(list);------------------
+
+return new ArrayList<>(uniqueSet);------------
+    }
+    public static List<List<Integer>> f(int[] arr,int n,int in,ArrayList<Integer> templist, List<List<Integer>> list)
+    {
+
+     if(in>=n){
+         list.add(new ArrayList<>(templist));
+         return list;
+
+     }
+     templist.add(arr[in]);
+     f(arr,n,in+1,templist,list);
+     templist.remove(Integer.valueOf(arr[in]));
+     f(arr,n,in+1,templist,list);
+     return list;
+    }
+
+}
+
+12)N-queens
+
+
+package programs;
+
+public class nqueens {
+    public static void main(String args[])
+    {
+        int n=5;
+        solve(new boolean[n][n],0);
+    }
+    public static void solve(boolean board[][],int row)
+    {
+        if(row==board.length)
+        {
+            print(board);
+        }
+        for(int col=0;col< board.length;col++)
+        {
+            if(issafe(board,row,col))
+            {
+                board[row][col]=true;
+                solve(board,row+1);
+                board[row][col]=false;
+            }
+
+
+        }
+
+    }
+    public static void print(boolean board[][])
+    {
+        for(int i=0;i< board.length;i++)
+        {
+            for(int j=0;j< board.length;j++)
+            {
+                System.out.print(board[i][j]+" ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+        System.out.println();
+    }
+    public static boolean issafe(boolean board[][],int row,int col)
+    {
+        // check vertical row
+        for (int i = 0; i < row; i++) {
+            if (board[i][col]) {
+                return false;
+            }
+        }
+        // Upper diagonal left
+        int r = row - 1, c = col - 1;
+        while (r >= 0 && c >= 0) { // Move up-left
+            if (board[r][c]) {
+                return false; // Unsafe
+            }
+            r--;
+            c--;
+        }
+
+        // Upper diagonal right
+        r = row - 1;
+        c = col + 1;
+        while (r >= 0 && c < board.length) { // Move up-right
+            if (board[r][c]) {
+                return false; // Unsafe
+            }
+            r--;
+            c++;
+        }
+
+        // Lower diagonal left
+        r = row + 1;
+        c = col - 1;
+        while (r < board.length && c >= 0) { // Move down-left
+            if (board[r][c]) {
+                return false; // Unsafe
+            }
+            r++;
+            c--;
+        }
+
+        // Lower diagonal right
+        r = row + 1;
+        c = col + 1;
+        while (r < board.length && c < board.length) { // Move down-right
+            if (board[r][c]) {
+                return false; // Unsafe
+            }
+            r++;
+            c++;
+        }
+
+        return true; // Safe if no conflicts
+
+
+    }
+}
+
+
+13) Suduku solver
+
+package com.kunal.backtracking;
+
+public class SudokuSolver {
+    public static void main(String[] args) {
+        int[][] board = new int[][]{
+                {3, 0, 6, 5, 0, 8, 4, 0, 0},
+                {5, 2, 0, 0, 0, 0, 0, 0, 0},
+                {0, 8, 7, 0, 0, 0, 0, 3, 1},
+                {0, 0, 3, 0, 1, 0, 0, 8, 0},
+                {9, 0, 0, 8, 6, 3, 0, 0, 5},
+                {0, 5, 0, 0, 9, 0, 6, 0, 0},
+                {1, 3, 0, 0, 0, 0, 2, 5, 0},
+                {0, 0, 0, 0, 0, 0, 0, 7, 4},
+                {0, 0, 5, 2, 0, 6, 3, 0, 0}
+        };
+
+        if (solve(board)) {
+            display(board);
+        } else {
+            System.out.println("Cannot solve");
+        }
+
+    }
+
+    static boolean solve(int[][] board) {
+        int n = board.length;
+        int row = -1;
+        int col = -1;
+
+        boolean emptyLeft = true;
+
+        // this is how we are replacing the r,c from arguments
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] == 0) {
+                    row = i;
+                    col = j;
+                    emptyLeft = false;
+                    break;
+                }
+            }
+            // if you found some empty element in row, then break
+            if (emptyLeft == false) {
+                break;
+            }
+        }
+
+        if (emptyLeft == true) {
+            return true;
+            // soduko is solved
+        }
+
+        // backtrack
+        for (int number = 1; number <= 9; number++) {
+            if (isSafe(board, row, col, number)) {
+                board[row][col] = number;
+                if (solve(board)) {
+                    // found the answer
+                    return true;
+                } else {
+                    // backtrack
+                    board[row][col] = 0;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static void display(int[][] board) {
+        for(int[] row : board) {
+            for(int num : row) {
+                System.out.print(num + " ");
+            }
+            System.out.println();
+        }
+    }
+
+
+    static boolean isSafe(int[][] board, int row, int col, int num) {
+        // check the row
+        for (int i = 0; i < board.length; i++) {
+            // check if the number is in the row
+            if (board[row][i] == num) {
+                return false;
+            }
+        }
+
+        // check the col
+        for (int[] nums : board) {
+            // check if the number is in the col
+            if (nums[col] == num) {
+                return false;
+            }
+        }
+
+        int sqrt = (int)(Math.sqrt(board.length));
+        int rowStart = row - row % sqrt;
+        int colStart = col - col % sqrt;
+
+        for (int r = rowStart; r < rowStart + sqrt; r++) {
+            for (int c = colStart; c < colStart + sqrt; c++) {
+                if (board[r][c] == num) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
+
+
+14)Rat in a maze -gfg
+
+
+class Solution {
+    // Function to find all possible paths
+    public ArrayList<String> findPath(ArrayList<ArrayList<Integer>> mat) {
+        // code here
+       
+        ArrayList<String> ans =new ArrayList<>();
+         if(mat.get(0).get(0)==0||mat.get(mat.size()-1).get(mat.size()-1)==0)
+        return ans;
+        int n=mat.size();
+        int[][] visited = new int[n][n]; // Visited array
+        visited[0][0] = 1; 
+        f(mat,visited,0,0,"",ans);
+        Collections.sort(ans);
+     return ans;
+        
+    }
+    public static void f(ArrayList<ArrayList<Integer>> mat,int[][] visited,int r,int c,String s, ArrayList<String> ans)
+    {
+        if (r==mat.size()-1&&c==mat.size()-1)
+        {
+            ans.add(s);
+            
+            return;
+        }
+        if(valid(r+1,c,mat,visited))
+        {
+            visited[r+1][c]=1;
+           
+            f(mat,visited,r+1,c,s+"D",ans);
+           // s=s.substring(0,s.length()-1);
+            visited[r+1][c]=0;
+        }
+         if(valid(r-1,c,mat,visited))
+        {
+            visited[r-1][c]=1;
+            
+            f(mat,visited,r-1,c,s+"U",ans);
+            //s=s.substring(0,s.length()-1);
+            visited[r-1][c]=0;
+        }
+         if(valid(r,c+1,mat,visited))
+        {
+            visited[r][c+1]=1;
+           
+            f(mat,visited,r,c+1,s+"R",ans);
+           // s=s.substring(0,s.length()-1);
+            visited[r][c+1]=0;
+        }
+         if(valid(r,c-1,mat,visited))
+        {
+            visited[r][c-1]=1;
+          
+            f(mat,visited,r,c-1,s+"L",ans);
+           // s=s.substring(0,s.length()-1);
+            visited[r][c-1]=0;
+        }
+        
+    }
+    public static boolean valid(int r,int c,ArrayList<ArrayList<Integer>> mat,int[][] visited)
+    {
+        if(r<0||r>=mat.size()||c<0||c>=mat.size())
+        return false;
+        if(visited[r][c]==1)
+        return false;
+        if(mat.get(r).get(c)==0)
+        return false;
+        return true;
+        
+    }
+}
+
+
+
+
+15)131.palindrome partitioning
+
+
+class Solution {
+    public List<List<String>> partition(String s) {
+   List<List<String>> ans=new ArrayList<>();
+   rec(0,s,ans,new ArrayList<>());
+   return ans;
+        
+    }
+     public static void rec(int in,String up,List<List<String>> ans,List<String> temp)
+    {
+        if(in==up.length()){
+             
+ans.add(new ArrayList<>(temp));
+return;
+        }
+       
+        for(int i=in;i<up.length();i++)
+        {
+            if(ispal(up,in,i))
+            {
+                 
+                temp.add(up.substring(in,i+1));
+                rec(i+1,up,ans,temp);
+                temp.remove(temp.size()-1);
+            }
+        }
+    }
+    public static boolean ispal(String s,int l,int r)
+    {
+        
+        while(l<=r)
+        {
+            if(s.charAt(l)!=s.charAt(r))
+            return false;
+            l++;
+            r--;
+        }
+        return true;
+
+    }
+
+}
+
+
+16)M-colouring-gfg
+
+
+class Solution {
+    boolean graphColoring(int v, List<int[]> edges, int m) {
+        // code here
+        List<List<Integer>> adjList = new ArrayList<>();
+        
+        for (int i = 0; i < v; i++) {
+            adjList.add(new ArrayList<>());
+        }
+        for (int[] edge : edges) {
+            adjList.get(edge[0]).add(edge[1]);
+            adjList.get(edge[1]).add(edge[0]); // Undirected graph
+        }
+        
+        return solve(0,new int[v],v,m,adjList);
+    }
+    public static boolean solve(int in,int[] vcolor,int v,int m,List<List<Integer>> visited)
+    {
+        if(in==v)
+        {
+            return true;
+        }
+        for(int i=1;i<=m;i++)
+        {
+            if(issafe(visited,i,in,vcolor,v))
+            {
+                vcolor[in]=i;
+                if(solve(in+1,vcolor,v,m,visited))
+                return true;
+                vcolor[in]=0;
+            }
+        }
+        return false;
+    }
+    public static boolean issafe(List<List<Integer>> visited,int color,int in,int[] vcolor,int v)
+    {
+        for(int i:visited.get(in))
+        {
+            if(vcolor[i]==color)
+            return false;
+        }
+        return true;
+    }
+}
+
+17)22.generate paranthesis
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Solution {
+    public List<String> generateParenthesis(int n) {
+        // Define the result list to store valid combinations
+        List<String> res = new ArrayList<>();
+        
+        // Start the backtracking process
+        backtrack(res, new StringBuilder(), 0, 0, n);
+        
+        return res;
+    }
+
+    // Backtracking function
+    private void backtrack(List<String> res, StringBuilder current, int open, int close, int max) {
+        // Base case: if the current combination is valid
+        if (open == max && close == max) {
+            res.add(current.toString());
+            return;
+        }
+
+        // Add an open parenthesis if open < max
+        if (open < max) {
+            current.append("(");
+            backtrack(res, current, open + 1, close, max); // Recur with one more open
+            current.deleteCharAt(current.length() - 1); // Backtrack
+        }
+
+        // Add a closing parenthesis if close < open
+        if (close < open) {
+            current.append(")");
+            backtrack(res, current, open, close + 1, max); // Recur with one more close
+            current.deleteCharAt(current.length() - 1); // Backtrack
+        }
+    }
+
+    // Test the function
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        int n = 3;
+        List<String> result = solution.generateParenthesis(n);
+        System.out.println(result);
+    }
+}
+
+
+18)decode ways using dynamic programming
+
+
+import java.util.HashMap;
+
+class Solution {
+    public int numDecodings(String s) {
+         HashMap<String, Integer> memo = new HashMap<>();
+         return  rec(s,memo);
+    }
+    public static int rec(String up, HashMap<String, Integer> memo)
+    {
+        if(up.isEmpty())
+
+
+            return 1;
+
+        if(up.startsWith("0"))
+            return 0;
+        if (memo.containsKey(up))
+            return memo.get(up);
+        int count1=  rec(up.substring(1),memo);
+        int count2=0;
+        if(up.length()>=2&&Integer.parseInt(up.substring(0,2))<=26)//for inputs like 27
+          count2=rec(up.substring(2),memo);
+          memo.put(up, count1 + count2);
+        return count1+count2;
+
+    }
+}
+
+
+19)200.Number of Islands
+
+
+import java.util.*;
+
+class Solution {
+    public int numIslands(char[][] grid) {
+        // Initialize the visited array and start solving
+        return solve(0, grid, new boolean[grid.length][grid[0].length]);
+    }
+
+    public static int solve(int c, char[][] grid, boolean[][] visited) {
+        boolean allVisited = true;
+        int r = -1, col = -1;
+
+        // Find the first unvisited land cell
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) { // Use grid[0].length for correct column bounds
+                if (grid[i][j] == '1' && !visited[i][j]) {
+                    r = i;
+                    col = j;
+                    allVisited = false;
+                    break;
+                }
+            }
+            if (!allVisited) break; // Stop outer loop if unvisited land found
+        }
+
+        // If all cells are visited, return the current island count
+        if (allVisited) return c;
+
+        // Perform BFS and increment the island count
+        List<int[]> list = new ArrayList<>();
+        list.add(new int[] { r, col });
+        c += bfs(list, grid, visited);
+
+        // Continue solving for other islands
+        return solve(c, grid, visited);
+    }
+
+    public static int bfs(List<int[]> list, char[][] grid, boolean[][] visited) {
+        int[] directions = { -1, 0, 1, 0, -1 }; // Directions for up, right, down, left
+        while (!list.isEmpty()) {
+            int[] current = list.remove(0);
+            int r = current[0];
+            int c = current[1];
+
+            // Mark current cell as visited
+            visited[r][c] = true;
+
+            // Check adjacent cells and add valid ones to the list
+            for (int i = 0; i < 4; i++) {
+                int newRow = r + directions[i];
+                int newCol = c + directions[i + 1];
+                if (valid(newRow, newCol, grid, visited)) {
+                    visited[newRow][newCol] = true; // Mark as visited immediately to avoid redundancy
+                    list.add(new int[] { newRow, newCol });
+                }
+            }
+        }
+        return 1; // One island processed
+    }
+
+    public static boolean valid(int r, int c, char[][] grid, boolean[][] visited) {
+        return r >= 0 && r < grid.length && c >= 0 && c < grid[0].length && grid[r][c] == '1' && !visited[r][c];
+    }
+}
+
+
+20)120.Triangle
+
+soln 1:uisng recursion'
+
+class Solution {
+    public int minimumTotal(List<List<Integer>> triangle) {
+      int[] min = new int[] {Integer.MAX_VALUE};
+       
+         minsum(0,0,0,min,triangle);
+         return min[0];
+    }
+    public static void minsum(int in,int i,int sum,int[] min,List<List<Integer>> triangle)
+    {
+        if(in==triangle.size())
+        {
+            min[0]=Math.min(min[0],sum);
+            return;
+            
+        }
+        if(in>=0&&in<triangle.size()&&i>=0&&i<triangle.get(in).size()){
+       minsum(in+1,i,sum+triangle.get(in).get(i),min,triangle);
+        //sum-=triangle.get(in).get(i);
+        
+         
+     minsum(in+1,i+1,sum+triangle.get(in).get(i),min,triangle);
+        } 
+        
+    }
+}
+
+
+soln 2: using dynamic program
+
+
+import java.util.List;
+
+class Solution {
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int[][] memo = new int[triangle.size()][triangle.size()];
+        for (int i = 0; i < triangle.size(); i++) {
+            for (int j = 0; j < triangle.size(); j++) {
+                memo[i][j] = Integer.MAX_VALUE; // Initialize memo table with max value
+            }
+        }
+        return minsum(0, 0, triangle, memo);
+    }
+    
+    public int minsum(int in, int i, List<List<Integer>> triangle, int[][] memo) {
+        if (in == triangle.size()) {
+            return 0; // Base case: reached the bottom of the triangle
+        }
+        
+        if (memo[in][i] != Integer.MAX_VALUE) {
+            return memo[in][i]; // Return cached result if already computed
+        }
+        
+        // Calculate minimum path sum from the current cell
+        int leftPath = minsum(in + 1, i, triangle, memo);
+        int rightPath = minsum(in + 1, i + 1, triangle, memo);
+        memo[in][i] = triangle.get(in).get(i) + Math.min(leftPath, rightPath);
+        
+        return memo[in][i];
+    }
+}
+
+21) kth largest elemet using quick sort
+
+
+
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        return quickSelect(nums, 0, nums.length - 1, k);
+    }
+
+    private int quickSelect(int[] nums, int low, int high, int k) {
+        if (low <= high) {
+            int pi = partition(nums, low, high);
+
+            // If the pivot is the kth largest element
+            if (pi == k - 1) {
+                return nums[pi];
+            } else if (pi > k - 1) {
+                // Search in the left part
+                return quickSelect(nums, low, pi - 1, k);
+            } else {
+                // Search in the right part
+                return quickSelect(nums, pi + 1, high, k);
+            }
+        }
+        return -1; // Should never reach here
+    }
+
+    private int partition(int[] nums, int low, int high) {
+        int pivot = nums[high];
+        int i = low - 1;
+
+        for (int j = low; j < high; j++) {
+            if (nums[j] > pivot) { // Prioritize larger elements
+                i++;
+                swap(nums, i, j);
+            }
+        }
+        swap(nums, i + 1, high);
+        return i + 1;
+    }
+
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+}
+

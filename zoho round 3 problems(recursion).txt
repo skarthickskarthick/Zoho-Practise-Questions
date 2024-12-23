@@ -1,0 +1,379 @@
+1)generate paranthesis
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Solution {
+    public List<String> generateParenthesis(int n) {
+        // Define the result list to store valid combinations
+        List<String> res = new ArrayList<>();
+        
+        // Start the backtracking process
+        backtrack(res, new StringBuilder(), 0, 0, n);
+        
+        return res;
+    }
+
+    // Backtracking function
+    private void backtrack(List<String> res, StringBuilder current, int open, int close, int max) {
+        // Base case: if the current combination is valid
+        if (open == max && close == max) {
+            res.add(current.toString());
+            return;
+        }
+
+        // Add an open parenthesis if open < max
+        if (open < max) {
+            current.append("(");
+            backtrack(res, current, open + 1, close, max); // Recur with one more open
+            current.deleteCharAt(current.length() - 1); // Backtrack
+        }
+
+        // Add a closing parenthesis if close < open
+        if (close < open) {
+            current.append(")");
+            backtrack(res, current, open, close + 1, max); // Recur with one more close
+            current.deleteCharAt(current.length() - 1); // Backtrack
+        }
+    }
+
+    // Test the function
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        int n = 3;
+        List<String> result = solution.generateParenthesis(n);
+        System.out.println(result);
+    }
+}
+
+
+
+
+
+2)k- marsh
+
+ public static void kMarsh(List<String> grid) {
+    int m = grid.size();             // Number of rows
+        int n = grid.get(0).length();    // Number of columns
+
+        int[][] dp = new int[m][m];      // dp[j][k] stores max continuous width between rows j and k
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < m; j++) {
+                dp[i][j] = -1;           // Initialize dp with -1 (no valid rectangle yet)
+            }
+        }
+
+        int ans = 0;
+        boolean found = false;
+
+        // Iterate over columns
+        for (int col = 0; col < n; col++) {
+            for (int j = 0; j < m; j++) {
+                boolean flag=true;
+                for (int k = j + 1; k < m; k++) {
+                    if(grid.get(k).charAt(col)=='x')
+                    flag=false;
+                    
+                    if (grid.get(j).charAt(col) == '.' && grid.get(k).charAt(col) == '.')  {
+                        if (dp[j][k] >= 0) {
+                            dp[j][k]++;
+                        } else if(flag) {
+                            dp[j][k] = 0; // Start tracking width
+                        }
+
+                        // Calculate perimeter for the valid rectangle
+                        if(flag&&dp[j][k]>0){
+                        int height = k - j;
+                        int width = dp[j][k];
+                        int perimeter = 2 * (height + width);
+                        
+                        ans = Math.max(ans, perimeter);
+                        found = true;
+                        }
+                    } else {
+                        dp[j][k] = -1; // Reset if any cell is blocked
+                    }
+                }
+            }
+        }
+
+        // Output the result
+        if (found) {
+            System.out.println(ans);
+        } else {
+            System.out.println("impossible");
+        }
+    }
+}
+
+input:
+. . . . .
+. x x . .
+. . . . .
+. . . . .
+
+
+
+
+3) Flipping matrix-hackerank-constructive algorithm
+
+ public static int flippingMatrix(List<List<Integer>> matrix) {
+    // Write your code here
+    int sum=0,n=matrix.size();
+    for(int i=0;i<n/2;i++)
+    {
+        for(int j=0;j<n/2;j++)
+        {
+            sum+=Math.max(Math.max(matrix.get(i).get(j),matrix.get(i).get(n-j-1)
+            ),Math.max(matrix.get(n-i-1).get(j),matrix.get(n-i-1).get(n-j-1)));
+        }
+    }
+      return sum;
+    }
+
+}
+
+4)decode ways
+
+
+soln 1: using only recursion
+
+
+package programs;
+
+public class decodeways {
+    public static void main(String args[])
+    {
+
+        System.out.println(rec("122016"));
+    }
+    public static int rec(String up)
+    {
+        if(up.isEmpty())
+
+
+            return 1;
+
+        if(up.startsWith("0"))
+            return 0;
+
+        int count1=  rec(up.substring(1));
+        int count2=0;
+        if(up.length()>=2&&Integer.parseInt(up.substring(0,2))<=26)//for inputs like 27
+          count2=rec(up.substring(2));
+        return count1+count2;
+
+    }
+}
+
+soln 2: using dp
+
+import java.util.HashMap;
+
+class Solution {
+    public int numDecodings(String s) {
+        return rec(s, new HashMap<>());
+    }
+
+    private int rec(String up, HashMap<String, Integer> memo) {
+        // If the substring is already computed, return its result
+        if (memo.containsKey(up)) {
+            return memo.get(up);
+        }
+
+        // Base case: an empty string represents one valid decoding
+        if (up.isEmpty()) {
+            return 1;
+        }
+
+        // If the string starts with '0', it is invalid
+        if (up.startsWith("0")) {
+            return 0;
+        }
+
+        // Decode one character
+        int count = rec(up.substring(1), memo);
+
+        // Decode two characters if valid
+        if (up.length() >= 2) {
+            int num = Integer.parseInt(up.substring(0, 2));
+            if (num <= 26) {
+                count += rec(up.substring(2), memo);
+            }
+        }
+
+        // Store the result in the memo map
+        memo.put(up, count);
+
+        return count;
+    }
+}
+
+soln 3:https://leetcode.com/problems/decode-ways/solutions/1044214/java-recursion-tree-figure/
+
+final soln:
+
+import java.util.HashMap;
+
+class Solution {
+    public int numDecodings(String s) {
+         HashMap<String, Integer> memo = new HashMap<>();
+         return  rec(s,memo);
+    }
+    public static int rec(String up, HashMap<String, Integer> memo)
+    {
+        if(up.isEmpty())
+
+
+            return 1;
+
+        if(up.startsWith("0"))
+            return 0;
+        if (memo.containsKey(up))
+            return memo.get(up);
+        int count1=  rec(up.substring(1),memo);
+        int count2=0;
+        if(up.length()>=2&&Integer.parseInt(up.substring(0,2))<=26)//for inputs like 27
+          count2=rec(up.substring(2),memo);
+          memo.put(up, count1 + count2);
+        return count1+count2;
+
+    }
+}
+
+
+5)200. Number of Islands
+
+import java.util.*;
+
+class Solution {
+    public int numIslands(char[][] grid) {
+        // Initialize the visited array and start solving
+        return solve(0, grid, new boolean[grid.length][grid[0].length]);
+    }
+
+    public static int solve(int c, char[][] grid, boolean[][] visited) {
+        boolean allVisited = true;
+        int r = -1, col = -1;
+
+        // Find the first unvisited land cell
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) { // Use grid[0].length for correct column bounds
+                if (grid[i][j] == '1' && !visited[i][j]) {
+                    r = i;
+                    col = j;
+                    allVisited = false;
+                    break;
+                }
+            }
+            if (!allVisited) break; // Stop outer loop if unvisited land found
+        }
+
+        // If all cells are visited, return the current island count
+        if (allVisited) return c;
+
+        // Perform BFS and increment the island count
+        List<int[]> list = new ArrayList<>();
+        list.add(new int[] { r, col });
+        c += bfs(list, grid, visited);
+
+        // Continue solving for other islands
+        return solve(c, grid, visited);
+    }
+
+    public static int bfs(List<int[]> list, char[][] grid, boolean[][] visited) {
+        int[] directions = { -1, 0, 1, 0, -1 }; // Directions for up, right, down, left
+        while (!list.isEmpty()) {
+            int[] current = list.remove(0);
+            int r = current[0];
+            int c = current[1];
+
+            // Mark current cell as visited
+            visited[r][c] = true;
+
+            // Check adjacent cells and add valid ones to the list
+            for (int i = 0; i < 4; i++) {
+                int newRow = r + directions[i];
+                int newCol = c + directions[i + 1];
+                if (valid(newRow, newCol, grid, visited)) {
+                    visited[newRow][newCol] = true; // Mark as visited immediately to avoid redundancy
+                    list.add(new int[] { newRow, newCol });
+                }
+            }
+        }
+        return 1; // One island processed
+    }
+
+    public static boolean valid(int r, int c, char[][] grid, boolean[][] visited) {
+        return r >= 0 && r < grid.length && c >= 0 && c < grid[0].length && grid[r][c] == '1' && !visited[r][c];
+    }
+}
+
+
+6)120.Triangle
+
+soln 1:uisng recursion'
+
+class Solution {
+    public int minimumTotal(List<List<Integer>> triangle) {
+      int[] min = new int[] {Integer.MAX_VALUE};
+       
+         minsum(0,0,0,min,triangle);
+         return min[0];
+    }
+    public static void minsum(int in,int i,int sum,int[] min,List<List<Integer>> triangle)
+    {
+        if(in==triangle.size())
+        {
+            min[0]=Math.min(min[0],sum);
+            return;
+            
+        }
+        if(in>=0&&in<triangle.size()&&i>=0&&i<triangle.get(in).size()){
+       minsum(in+1,i,sum+triangle.get(in).get(i),min,triangle);
+        //sum-=triangle.get(in).get(i);
+        
+         
+     minsum(in+1,i+1,sum+triangle.get(in).get(i),min,triangle);
+        } 
+        
+    }
+}
+
+
+soln 2: using dynamic program
+
+
+import java.util.List;
+
+class Solution {
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int[][] memo = new int[triangle.size()][triangle.size()];
+        for (int i = 0; i < triangle.size(); i++) {
+            for (int j = 0; j < triangle.size(); j++) {
+                memo[i][j] = Integer.MAX_VALUE; // Initialize memo table with max value
+            }
+        }
+        return minsum(0, 0, triangle, memo);
+    }
+    
+    public int minsum(int in, int i, List<List<Integer>> triangle, int[][] memo) {
+        if (in == triangle.size()) {
+            return 0; // Base case: reached the bottom of the triangle
+        }
+        
+        if (memo[in][i] != Integer.MAX_VALUE) {
+            return memo[in][i]; // Return cached result if already computed
+        }
+        
+        // Calculate minimum path sum from the current cell
+        int leftPath = minsum(in + 1, i, triangle, memo);
+        int rightPath = minsum(in + 1, i + 1, triangle, memo);
+        memo[in][i] = triangle.get(in).get(i) + Math.min(leftPath, rightPath);
+        
+        return memo[in][i];
+    }
+}
+
