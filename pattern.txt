@@ -1,0 +1,591 @@
+1) pascal triangle
+
+public class pascal
+
+{
+    public static void main(String args[])
+    {
+        for(int i=0;i<10;i++)
+        {
+            for(int j=0;j<10-i;j++)
+            {
+                System.out.print(" ");
+            }
+            for(int j=0;j<i;j++)
+            {
+                System.out.print(fact(i)/(fact(i-j)*fact(j))+" "); //nCr formula
+            }
+            System.out.print(1);
+            System.out.println();
+        }
+    }
+    public static int fact(int n)
+    {
+        if(n==0)
+        return 1;
+        return n*fact(n-1);
+    }
+}
+
+output:
+
+          1
+         1 1
+        1 2 1
+       1 3 3 1
+      1 4 6 4 1
+     1 5 10 10 5 1
+    1 6 15 20 15 6 1
+   1 7 21 35 35 21 7 1
+  1 8 28 56 70 56 28 8 1
+ 1 9 36 84 126 126 84 36 9 1
+
+
+
+(or)
+
+int n = 4;
+        for(int i = 1;i<=n;i++){
+            //Spaces
+            for(int j=1;j<=n-i;j++){
+                System.out.print(" ");
+            }
+            //Printing Element
+            int val = 1;
+            for(int j=1;j<=i;j++){
+                System.out.print(val+" ");
+                val = val * (i-j)/j;
+            }
+            System.out.println();
+        }
+
+
+2)program cross pattern
+
+public class patt
+{
+public static void main(String args[])
+{
+int temp=6;
+String str="program";
+for(int i=0;i<7;i++)
+{
+for(int j=0;j<7;j++)
+{
+System.out.print(" ");
+if(i==j&&i!=3)
+System.out.print(str.charAt(j));
+if(j==temp)
+{
+System.out.print(str.charAt(j));
+temp--;
+}
+}
+System.out.println();
+}
+}
+} 
+
+
+
+3)Diamond pattern
+
+
+#include<stdio.h>
+int main()
+{
+int i,j,n=5;
+for(i=0;i<n;i++)
+{
+	for(j=n;j>i;j--)
+	printf(" ");
+	for(j=0;j<i;j++)
+	printf("* ");
+	printf("\n");
+}
+for(i=0;i<n;i++)
+{
+	for(j=0;j<i;j++)
+	printf(" ");
+	for(j=n;j>i;j--)
+	printf("* ");
+	printf("\n");
+}
+return 0;
+}
+
+output
+
+    *
+   * *
+  * * *
+ * * * *
+* * * * *
+ * * * *
+  * * *
+   * *
+    *
+
+
+4)Number increment and decrement pattern
+
+class pattern {
+    public static void main(String[] args) {
+
+        int n = 5;
+        for (int i = 0; i <= n; i++) {
+
+            for (int k = 0; k < n - i; k++)
+                System.out.print(" ");
+            for (int j = i; j >= 1; j--)
+                System.out.print(j);
+            for (int j = 2; j <= i; j++)
+                System.out.print(j);
+            System.out.println();
+
+        }
+
+    }
+}
+
+output
+
+    1
+   212
+  32123
+ 4321234
+543212345
+
+
+5)spiral hackerank pattern
+
+package practise;
+
+public class spiral_hackathon_pattern {
+	public static void main(String args[])
+	{
+	int n=5;
+	for(int i=n;i>1;i--)
+	{
+	for(int j=n;j>i;j--)
+	{
+	   System.out.print(j+" ");
+	}
+	for(int j=1;j<=2*i-1;j++)
+	{
+	   System.out.print(i+" ");
+	}
+	for(int j=i+1;j<=n;j++)
+	{
+	     System.out.print(j+" ");
+	}
+	System.out.println();
+
+	}
+	
+	for(int i=1;i<=n;i++)
+	{
+	for(int j=n;j>i;j--)
+	{
+	   System.out.print(j+" ");
+	}
+	for(int j=1;j<=2*i-1;j++)
+	{
+	   System.out.print(i+" ");
+	}
+	for(int j=i+1;j<=n;j++)
+	{
+	     System.out.print(j+" ");
+	}
+	System.out.println();
+
+	}
+	
+	
+	
+	}
+}
+
+output
+
+5 5 5 5 5 5 5 5 5 
+5 4 4 4 4 4 4 4 5 
+5 4 3 3 3 3 3 4 5 
+5 4 3 2 2 2 3 4 5 
+5 4 3 2 1 2 3 4 5 
+5 4 3 2 2 2 3 4 5 
+5 4 3 3 3 3 3 4 5 
+5 4 4 4 4 4 4 4 5 
+5 5 5 5 5 5 5 5 5 
+
+
+
+6)pattern 1
+
+package practise;
+
+public class pattern {
+public static void main(String args[])
+{
+	int n=4,temp=1;
+	for(int i=1;i<=n;i++)
+	{
+		if(i%2==0) {
+			int j;
+			for(j=temp+n;j>temp;j--)
+			{
+				System.out.print(j +"  ");
+			}
+			temp=j+1+n;
+			
+		}
+		else
+		{
+			
+			for(int j=temp;j<=i*n;j++)
+			{
+				System.out.print(j +"  ");
+			}
+			temp=i*n;
+		}
+		System.out.println();
+		
+	}
+}
+}
+
+
+output
+
+1  2  3  4  
+8  7  6  5  
+9  10  11  12  
+16  15  14  13  
+
+(or)
+
+package pattern;
+
+public class zigzag {
+    public static void main(String args[])
+    {
+        int n=5;
+        boolean f=true;
+        for(int i=1;i<=n;i++)
+        {
+            if(f)
+            {
+
+                for(int j=1;j<=n;j++)
+                {
+                    System.out.print(n*(i-1)+j);
+                    System.out.print(" ");
+                }
+            }
+            else
+            {
+                for(int j=0;j<n;j++)
+                {
+                    System.out.print(n*(i)-j);
+                    System.out.print(" ");
+                }
+
+            }
+            f=!f;
+            System.out.println();
+        }
+    }
+}
+
+
+
+
+
+
+
+
+7) pattern 2
+
+package practise;
+
+public class pattern11 {
+public static void main(String args[])
+{
+	int n=4,startvalue=1;
+	for(int i=1;i<=n;i++)
+		
+	{
+		int value=startvalue;
+		for(int j=1;j<=nn;j++)
+		{
+			System.out.print(value+" ");
+			if((i+j)>n)
+			{
+				int diff=(i+j)-n;
+				value+=(n-diff)+1;
+			}
+			else
+				value+=i+j;
+		}
+		startvalue+=i;
+		System.out.println();
+	}
+}
+}
+
+output
+1 3 6 10 
+2 5 9 13 
+4 8 12 15 
+7 11 14 16 
+
+
+8)cross number pattern
+
+package pattern;
+
+public class crossnumberpattern {
+    public static void main(String args[])
+    {
+        int n=5,temp=1,inc=2;
+        for(int i=0;i<n;i++)
+        {
+            temp=temp+i;
+            System.out.print(temp+" ");
+
+            if(i==n-1)
+                inc=i+1;
+            else
+                inc=i+2;
+            int before=temp,flag=0,flag1=0;
+            for(int j=1;j<n;j++)
+            {
+               if(inc<=n&&flag1!=1) {
+                   System.out.print(before + inc+ " ");
+                   before+=inc++;
+                   if(inc-1==n&&i!=n-1&&flag==0)
+                   {
+                       inc=n;
+                       flag=1;
+                       flag1=1;
+                   }
+                   if(inc-1==n&&i==n-1)
+                   {
+                       inc=n-1;
+                       flag1=1;
+                   }
+
+               }
+               else {
+
+
+                   System.out.print(before +inc + " ");
+                   before+=inc--;
+
+               }
+            }
+            System.out.println();
+        }
+    }
+}
+
+
+output:
+
+1 3 6 10 15 
+2 5 9 14 19 
+4 8 13 18 22 
+7 12 17 21 24 
+11 16 20 23 25
+
+
+(or)
+
+
+package pattern;
+
+public class diagonalnumbers
+{
+    public static void main(String args[])
+    {
+        int n=4,temp=1;
+
+        for(int i=1;i<=n;i++)
+        {
+
+            int sum=i+1;
+
+            int num=temp;
+            for(int j=i;j<=n;j++)
+            {
+                System.out.print(temp+" ");
+                temp+=sum++;
+            }
+           temp--;
+            sum=sum-2;
+
+            for(int j=1;j<i;j++)
+            {
+                System.out.print(temp+" ");
+                temp+=--sum;
+            }
+            temp=num+i;
+            System.out.println();
+        }
+    }
+}
+// 1 3 6 10
+// 2 5 9 13
+// 4 8 12 15
+// 7 11 14 16
+
+
+ 
+
+9)zoho cross pattern
+
+package pattern;
+
+public class zpattern {
+
+    public static void main(String args[])
+    {
+        String s="zohocorporationteam";
+        int n=7,in=0;
+        for(int i=0;i<n;i++)
+        {
+            if(i==0||i==n-1)
+            {
+                for(int j=0;j<n;j++)
+                {
+                    System.out.print(s.charAt(in++));
+                }
+            }
+            else
+            {
+                for(int j=0;j<n-i-1;j++)
+                    System.out.print(" ");
+                System.out.print(s.charAt(in++));
+
+            }
+            System.out.println();
+        }
+    }
+}
+
+output:
+
+zohocor
+     p
+    o
+   r
+  a
+ t
+ionteam
+
+
+10)number12321 pattern
+
+
+package pattern;
+
+public class number12321 {
+    public static void main(String args[])
+    {
+        int n=6;
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=1;j<=n-i;j++)
+            {
+                System.out.print(" ");
+            }
+            int k;
+            for(k=1;k<=i;k++)
+            {
+                System.out.print(k);
+            }
+            k--;
+            for(int j=1;j<i;j++)
+            {
+                System.out.print(--k);
+            }
+            System.out.println();
+        }
+    }
+}
+
+
+output:
+
+
+     1
+    121
+   12321
+  1234321
+ 123454321
+12345654321
+
+
+11)Column wise pattern
+
+
+package pattern;
+
+public class columnwisepattern123 {
+    public static void main(String args[])
+    {
+        int n=6;
+        for(int i=1;i<=n;i++)
+        {
+           int  temp=i;
+            for(int j=1;j<=i;j++)
+            {
+
+                System.out.print(temp+" ");
+                temp+=n-j;
+            }
+            System.out.println();
+        }
+    }
+}
+
+
+output:
+1 
+2 7 
+3 8 12 
+4 9 13 16 
+5 10 14 17 19 
+6 11 15 18 20 21 
+
+
+12)column increment pattern
+
+
+package pattern;
+
+public class columnincrement {
+    public static void main(String args[])
+    {
+        int n=4;
+        for(int i=1;i<=n;i++)
+        {
+            int temp=i;
+            int sum=i;
+            for (int j=1;j<=n;j++)
+            {
+                System.out.print(temp+"  ");
+                sum+=n-1;
+                temp+=sum;
+            }
+            System.out.println();
+        }
+    }
+}
+
+output:
+
+1  5  12  22  
+2  7  15  26  
+3  9  18  30  
+4  11  21  34  

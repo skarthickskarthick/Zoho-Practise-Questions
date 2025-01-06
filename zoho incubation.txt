@@ -1,0 +1,565 @@
+1)pattern 1
+
+package practise;
+
+public class pattern {
+public static void main(String args[])
+{
+	int n=4,temp=1;
+	for(int i=1;i<=n;i++)
+	{
+		if(i%2==0) {
+			int j;
+			for(j=temp+n;j>temp;j--)
+			{
+				System.out.print(j +"  ");
+			}
+			temp=j+1+n;
+			
+		}
+		else
+		{
+			
+			for(int j=temp;j<=i*n;j++)
+			{
+				System.out.print(j +"  ");
+			}
+			temp=i*n;
+		}
+		System.out.println();
+		
+	}
+}
+}
+
+
+output
+
+1  2  3  4  
+8  7  6  5  
+9  10  11  12  
+16  15  14  13  
+
+
+2) pattern 2
+
+package practise;
+
+public class pattern11 {
+public static void main(String args[])
+{
+	int n=4,startvalue=1;
+	for(int i=1;i<=n;i++)
+		
+	{
+		int value=startvalue;
+		for(int j=1;j<=nn;j++)
+		{
+			System.out.print(value+" ");
+			if((i+j)>n)
+			{
+				int diff=(i+j)-n;
+				value+=(n-diff)+1;
+			}
+			else
+				value+=i+j;
+		}
+		startvalue+=i;
+		System.out.println();
+	}
+}
+}
+
+output
+1 3 6 10 
+2 5 9 13 
+4 8 12 15 
+7 11 14 16 
+
+
+3) second largest
+
+
+soln 1:2nd largest
+package practise;
+
+public class largest {
+	public static void main(String args[])
+	{
+		int arr[]= {10,13,9,6,12,89};
+		int max=arr[0],res=0;
+		for(int i =1;i<arr.length;i++)
+		{
+	
+			if(arr[i]>max)
+			{
+				res=max;
+				max=arr[i];
+				
+			}
+			else if(arr[i]>res&&res!=max)
+			{
+				res=arr[i];
+			}
+			 
+		}
+		System.out.println(res);
+	}
+
+}
+
+
+                (or)
+
+
+soln 2: 1796. Second Largest Digit in a String
+
+
+class Solution {
+    public int secondHighest(String s) {
+        int in=0;
+        int[] nums=new int[s.length()];
+        int smax=-1,max=-1;
+        for(int i=0;i<s.length();i++)
+        {
+            if(Character.isDigit(s.charAt(i)))
+            nums[in++]=s.charAt(i)-'0';
+        }
+        for(int i=0;i<in;i++)
+        {
+            if(nums[i]==max||nums[i]==smax)
+            continue;
+            if(nums[i]>max)
+            {
+                smax=max;
+                max=nums[i];
+            }
+            else if(nums[i]>smax)
+            smax=nums[i];
+            
+            
+        }
+       
+        return smax;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+4)factors of the numbers
+
+package practise;
+
+import java.util.Arrays;
+
+public class fact {
+	
+	public static void main(String args[]) {
+		int arr[] = {10, 12, 13, 9, 6, 11, 5,25};
+		int a[][] = new int[arr.length][2];
+		for (int i = 0; i < arr.length; i++) {
+			a[i][0] = arr[i];
+			a[i][1] = factor(arr[i]);
+		}
+		
+		for (int i = 0; i < a.length; i++) {
+			System.out.println(a[i][0] + " " + a[i][1]);
+		}
+	}
+	
+	static int factor(int n) {
+		if (n < 1) return 0;
+		int count = 2;
+		for (int i = 2; i <= Math.sqrt(n); i++) {
+			if (n % i == 0) {
+				count++;
+				if (i != n / i) // to avoid duplication eg:5*5=25
+					count++;
+			}
+		}
+		return count;
+	}
+}
+
+
+
+5)swap k elements in an array
+
+
+package prac;
+
+public class swaparray {
+	public static void main(String args[])
+	{
+		int arr[]= {10,12,13,15,9,5,44,33};
+                int k=3;
+		int l=(arr.length/k);
+		for(int i=0;i<l*k;i++)
+		{
+			arr=swap(arr,i,i+2);
+			i=i+2;
+		}
+		if(arr.length>l*k) {
+			swap(arr,l*k,arr.length-1);
+		}
+		
+		for(int i=0;i<arr.length;i++) {
+			System.out.print(arr[i]+" ");
+		}
+	}
+	static int[] swap(int[] arr,int start,int stop)
+	{
+		while(start<stop)
+		{
+			int temp=arr[start];
+			arr[start]=arr[stop];
+			arr[stop]=temp;
+			start++;
+			stop--;
+		}
+		return arr;
+	}
+
+}
+
+
+
+6) 540. Single Element in a Sorted Array
+
+
+
+class Solution {
+    public int singleNonDuplicate(int[] nums) {
+        if(nums.length==1)
+        return nums[0];
+        for(int i=0;i<nums.length;i++)
+        {
+            if(i==nums.length-1&&nums[i]!=nums[i-1])
+            return nums[i];
+
+            else if(nums[i]!=nums[i+1])
+            return nums[i];
+            
+            i++;
+        }
+        return -1;
+    }
+}
+
+
+7)347. Top K Frequent Elements
+
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        int arr[][]=new int[nums.length][2];
+        int in=0;
+        for(int i=0;i<nums.length;i++)
+        {
+            if(!search(nums[i],arr,in))
+            {
+                arr[in][0]=nums[i];
+               arr[in++][1]=1;
+            }
+
+        }
+        Arrays.sort(arr,Comparator.comparingInt(a->a[1]));
+       
+        int res[]=new int[k];
+        int l=arr.length-1;
+        for(int i=0;i<k;i++)
+        {
+        res[i]=arr[l--][0];
+        }
+     return res;
+    }
+    boolean search(int target,int[][] a,int in)
+    {
+        for(int i=0;i<in;i++)
+        {
+            if(a[i][0]==target){
+            a[i][1]++;
+            
+            return true;
+            }
+        }
+        return false;
+    }
+}
+
+
+8)349. Intersection of Two Arrays for sorted array
+
+
+class Solution {
+    public int[] intersection(int[] nums1, int[] nums2) {
+      Arrays.sort(nums1);
+      Arrays.sort(nums2);
+      int i=0,j=0,in=0;
+      int arr[]=new int[nums2.length];
+      while(i<nums1.length&&j<nums2.length)
+      {
+        if(nums1[i]==nums2[j]){
+        arr[in++]=nums1[i];
+        while(i!=nums1.length&&j!=nums2.length&&nums1[i]==nums2[j]&&nums1[i]==arr[in-1]){
+        i++;
+        j++;}
+        }
+        else if(nums1[i]<nums2[j])
+        i++;
+        else
+        j++;
+      }
+      return Arrays.copyOf(arr,in);
+      
+      }
+}
+
+
+
+
+
+9)169. Majority Element
+
+class Solution {
+    public int majorityElement(int[] nums) {
+        int count=0;
+        int ans=0;
+       for(int i=0;i<nums.length;i++)
+       {
+        if(count==0)
+        ans=nums[i];
+        if(ans==nums[i])
+        count++;
+        else
+        count--;
+       }
+       return ans;
+    }
+}
+
+
+
+10)917. Reverse Only Letters
+
+
+class Solution {
+    public String reverseOnlyLetters(String s) {
+       String res="";
+       String str="";
+       for(int i=0;i<s.length();i++)
+       {
+        if(Character.isLetter(s.charAt(i)))
+        str+=String.valueOf(s.charAt(i));
+       }
+       System.out.println(str);
+       int j=str.length();
+       for(int i=0;i<s.length();i++)
+       {
+        if(!Character.isLetter(s.charAt(i)))
+        res+=String.valueOf(s.charAt(i));
+       else 
+       {if(j!=0)
+        res+=String.valueOf(str.charAt(--j));
+       }
+       }
+       return res;
+    }
+}
+
+
+                        (or)
+
+
+public class ReverseAdvance {
+    public static void main(String[] args) {
+        char[] str = { 'h', 'e', 'l', 'l', 'o', '!', ' ', 'h', 'o', 'w', ' ' };
+        reverseOnlyAlpha(str);
+        printCharacter(str);
+    }
+
+    private static void printCharacter(char[] str) {
+        System.out.println();
+        for (char character : str) {
+            System.out.print(character);
+        }
+    }
+
+    private static void reverseOnlyAlpha(char[] str) {
+        int start = 0;
+        int end = str.length - 1;
+        while (start < end) {
+            while (isNotAlpha(str[start])) {
+                start++;
+                if (start == str.length)
+                    break;
+
+            }
+            while (isNotAlpha(str[end])) {
+                end--;
+                if (end == -1)
+                    break;
+            }
+            if (start != str.length && end != -1) {
+                swap(start, end, str);
+            }
+            start++;
+            end--;
+        }
+
+    }
+
+    private static boolean isNotAlpha(Character character) {
+        int ascii = Character.toUpperCase(character);
+        if (ascii >= 65 && ascii <= (65 + 26))
+            return false;
+        return true;
+
+    }
+
+    private static void swap(int start, int end, char[] str) {
+        char tem = str[start];
+        str[start] = str[end];
+        str[end] = tem;
+    }
+
+}
+
+
+11)Longest word in a string
+
+
+package prac;
+
+import java.util.Arrays;
+
+public class strreplace {
+	public static void main(String args[])
+	{
+		String s="Hello How karthick balasubramanian are you ";
+		int count=0,max=0,index=0;
+		for(int i=0;i<s.length();i++)
+		{
+			if(s.charAt(i)==' '&&count!=0) {
+				if(count>max) {
+					max=count;
+					index=i-count;
+					
+				}
+				count=0;
+			}
+			else if(s.charAt(i)!=' ')
+				count++;
+		}
+		String res="";
+		for(int i=index;s.charAt(i)!=' ';i++)
+		{
+			res+=String.valueOf(s.charAt(i));
+		}
+		System.out.println(res);
+		
+		
+	}
+
+}
+
+output:
+Balasubramanian
+
+
+12)index of the occurrence of the substring
+
+
+
+
+import java.util.Arrays;
+
+public class strreplace {
+	public static void main(String args[])
+	{
+		 String str = "i loooove india";
+	        String substr = "ove";
+		for(int i=0;i<=str.length()-substr.length();i++)
+		{	int j=0;
+			for(j=0;j<substr.length();j++)
+				{
+					if(substr.charAt(j)!=str.charAt(j+i))
+					{
+						break;
+					}
+				}
+			   if(j==substr.length())
+			   {
+				   System.out.print(i);
+				   break;
+			   }
+		}
+	}
+}
+ output: 6
+
+
+13)cross number pattern
+
+
+package pattern;
+
+public class crossnumberpattern {
+    public static void main(String args[])
+    {
+        int n=5,temp=1,inc=2;
+        for(int i=0;i<n;i++)
+        {
+            temp=temp+i;
+            System.out.print(temp+" ");
+
+            if(i==n-1)
+                inc=i+1;
+            else
+                inc=i+2;
+            int before=temp,flag=0,flag1=0;
+            for(int j=1;j<n;j++)
+            {
+               if(inc<=n&&flag1!=1) {
+                   System.out.print(before + inc+ " ");
+                   before+=inc++;
+                   if(inc-1==n&&i!=n-1&&flag==0)
+                   {
+                       inc=n;
+                       flag=1;
+                       flag1=1;
+                   }
+                   if(inc-1==n&&i==n-1)
+                   {
+                       inc=n-1;
+                       flag1=1;
+                   }
+
+               }
+               else {
+
+
+                   System.out.print(before +inc + " ");
+                   before+=inc--;
+
+               }
+            }
+            System.out.println();
+        }
+    }
+}
+
+
+output:
+
+1 3 6 10 15 
+2 5 9 14 19 
+4 8 13 18 22 
+7 12 17 21 24 
+11 16 20 23 25 
